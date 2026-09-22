@@ -60,6 +60,13 @@
   textarea{resize:vertical;min-height:64px}
   input::placeholder,textarea::placeholder{color:#a6a9ae}
 
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:500;color:var(--ink);
+    background:var(--bg);border:1px solid rgba(25,27,33,.16);border-radius:999px;padding:9px 15px;cursor:pointer;user-select:none;transition:background .15s,border-color .15s,box-shadow .15s}
+  .chip input{width:16px;height:16px;margin:0;accent-color:var(--accent);cursor:pointer;flex:none}
+  .chip:hover{border-color:rgba(25,27,33,.32)}
+  .chip:has(input:checked){background:#fff;border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 6px 14px -8px rgba(234,88,12,.55)}
+
   .actions{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
   .btn{
     appearance:none;border:0;cursor:pointer;font:inherit;font-weight:600;font-size:14px;
@@ -131,8 +138,12 @@
         <input id="phone" type="tel" placeholder="+7 900 000-00-00" autocomplete="off">
       </div>
       <div class="field">
-        <label for="mentor">Менторская строка</label>
-        <textarea id="mentor" placeholder="Ментор · Коуч · Карьерный консультант «Точка Роста»">Ментор · Коуч · Карьерный консультант «Точка Роста»</textarea>
+        <label>Роли на платформе «Точка Роста»</label>
+        <div class="chips">
+          <label class="chip"><input type="checkbox" name="role" data-label="Ментор" checked><span>Ментор</span></label>
+          <label class="chip"><input type="checkbox" name="role" data-label="Коуч" checked><span>Коуч</span></label>
+          <label class="chip"><input type="checkbox" name="role" data-label="Карьерный консультант" checked><span>Карьерный консультант</span></label>
+        </div>
       </div>
       <div class="actions">
         <button class="btn btn-primary" id="copyBtn" type="button">
@@ -147,7 +158,7 @@
     <section class="card preview-card" aria-label="Предпросмотр">
       <div class="card-title">Предпросмотр</div>
       <div class="preview-stage" id="previewStage"></div>
-      <p class="hint">Так подпись увидит получатель: сверху — стандартный блок сотрудника, снизу — блок платформы. Поле «Менторская строка» можно изменить или убрать.</p>
+      <p class="hint">Так подпись увидит получатель: сверху — стандартный блок сотрудника, снизу — блок платформы с отмеченными галочками ролями. Снимите все галочки — нижний блок исчезнет, останется подпись сотрудника.</p>
     </section>
   </div>
 </main>
@@ -166,7 +177,14 @@
   var SANS = "Arial,Helvetica,sans-serif";
 
   var $ = function(id){ return document.getElementById(id); };
-  var formEls = { name:$("name"), position:$("position"), phone:$("phone"), mentor:$("mentor") };
+  var formEls = { name:$("name"), position:$("position"), phone:$("phone") };
+  var roleEls = Array.prototype.slice.call(document.querySelectorAll('input[name="role"]'));
+
+  function mentorText(){
+    return roleEls.filter(function(el){ return el.checked; })
+                  .map(function(el){ return el.getAttribute("data-label"); })
+                  .join(" &middot; ");
+  }
 
   function escText(s){
     return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
@@ -186,7 +204,7 @@
     var name = clean(formEls.name.value);
     var position = clean(formEls.position.value);
     var phone = clean(formEls.phone.value);
-    var mentor = clean(formEls.mentor.value);
+    var mentor = mentorText();
 
     var staffHtml = "";
     if (name) staffHtml += "<div style=\"font-size:16px;line-height:1.3;font-weight:bold;color:#111827;margin:0;\">" + escText(name) + "</div>";
@@ -201,7 +219,7 @@
         + "<td valign=\"middle\" style=\"vertical-align:middle;padding-right:9px;\">"
         +   "<img src=\"" + LOGO_DATA + "\" width=\"" + LOGO_WIDTH + "\" height=\"" + LOGO_WIDTH + "\" alt=\"\" style=\"display:block;width:" + LOGO_WIDTH + "px;height:" + LOGO_WIDTH + "px;border:0;\">"
         + "</td>"
-        + "<td valign=\"middle\" style=\"vertical-align:middle;font-size:11px;line-height:1.45;color:#6b7280;font-family:" + SANS + ";\">" + escText(mentor) + "</td>"
+        + "<td valign=\"middle\" style=\"vertical-align:middle;font-size:11px;line-height:1.45;color:#6b7280;font-family:" + SANS + ";\">" + mentor + "</td>"
         + "</tr>"
         + "</table>"
         + "</td></tr>";
@@ -216,7 +234,8 @@
   }
 
   function buildPlainText(){
-    var parts = [clean(formEls.name.value), clean(formEls.position.value), clean(formEls.phone.value), clean(formEls.mentor.value)];
+    var parts = [clean(formEls.name.value), clean(formEls.position.value), clean(formEls.phone.value),
+                 mentorText().replace(/\s*&middot;\s*/g, " · ")];
     return parts.filter(Boolean).join("\n");
   }
 
@@ -225,7 +244,7 @@
     var name = clean(formEls.name.value);
     var position = clean(formEls.position.value);
     var phone = clean(formEls.phone.value);
-    var mentor = clean(formEls.mentor.value);
+    var mentor = mentorText();
     if (!name && !position && !phone && !mentor){
       stage.innerHTML = "<div class=\"preview-empty\">Заполните поля слева —<br>здесь появится подпись.</div>";
       return;
@@ -300,10 +319,15 @@
   names.forEach(function(k){
     formEls[k].addEventListener("input", function(){ renderPreview(); persist(); });
   });
+  roleEls.forEach(function(el){
+    el.addEventListener("change", function(){ renderPreview(); persist(); });
+  });
 
   function persist(){
     try {
       names.forEach(function(k){ localStorage.setItem("sig:" + k, formEls[k].value); });
+      localStorage.setItem("sig:roles", JSON.stringify(roleEls.map(function(el){ return el.checked; })));
+      localStorage.removeItem("sig:mentor");
     } catch(e){}
   }
   function restore(){
@@ -312,6 +336,11 @@
         var v = localStorage.getItem("sig:" + k);
         if (v != null) formEls[k].value = v;
       });
+      var roles = localStorage.getItem("sig:roles");
+      if (roles != null){
+        var arr = JSON.parse(roles);
+        roleEls.forEach(function(el, i){ if (arr[i] != null) el.checked = !!arr[i]; });
+      }
     } catch(e){}
   }
 
