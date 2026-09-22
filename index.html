@@ -10,7 +10,7 @@
     --card:#ffffff;
     --ink:#191b21;
     --muted:#6e7277;
-    --accent:#4f46e5;
+    --accent:#ea580c;
     --accent-ink:#ffffff;
     --hair:rgba(25,27,33,.10);
     --shadow:0 1px 2px rgba(25,27,33,.05),0 12px 32px -18px rgba(25,27,33,.25);
@@ -56,7 +56,7 @@
     background:var(--bg);border:1px solid rgba(25,27,33,.16);border-radius:10px;
     padding:11px 14px;outline:none;transition:border-color .15s,box-shadow .15s,background .15s;
   }
-  input:focus,textarea:focus{border-color:var(--accent);background:#fff;box-shadow:0 0 0 3px rgba(79,70,229,.14)}
+  input:focus,textarea:focus{border-color:var(--accent);background:#fff;box-shadow:0 0 0 3px rgba(234,88,12,.14)}
   textarea{resize:vertical;min-height:64px}
   input::placeholder,textarea::placeholder{color:#a6a9ae}
 
@@ -67,8 +67,8 @@
     transition:transform .06s, box-shadow .15s, background .15s;
   }
   .btn:active{transform:translateY(1px)}
-  .btn-primary{background:var(--accent);color:#fff;box-shadow:0 8px 20px -10px rgba(79,70,229,.55)}
-  .btn-primary:hover{background:#4338ca}
+  .btn-primary{background:var(--accent);color:#fff;box-shadow:0 8px 20px -10px rgba(234,88,12,.55)}
+  .btn-primary:hover{background:#c2410c}
   .btn-ghost{background:#fff;color:var(--ink);border:1px solid var(--hair)}
   .btn-ghost:hover{background:var(--bg)}
   .btn svg{width:16px;height:16px}
@@ -124,19 +124,15 @@
       </div>
       <div class="field">
         <label for="position">Должность</label>
-        <input id="position" type="text" placeholder="Руководитель направления" autocomplete="off">
+        <input id="position" type="text" placeholder="Ведущий специалист" autocomplete="off">
       </div>
       <div class="field">
         <label for="phone">Телефон</label>
         <input id="phone" type="tel" placeholder="+7 900 000-00-00" autocomplete="off">
       </div>
       <div class="field">
-        <label for="email">E-mail</label>
-        <input id="email" type="email" placeholder="name@company.com" autocomplete="off">
-      </div>
-      <div class="field">
-        <label for="site">Сайт / соцсеть</label>
-        <input id="site" type="text" placeholder="https://company.com" autocomplete="off">
+        <label for="mentor">Менторская строка</label>
+        <textarea id="mentor" placeholder="Ментор · Коуч · Карьерный консультант «Точка Роста»">Ментор · Коуч · Карьерный консультант «Точка Роста»</textarea>
       </div>
       <div class="actions">
         <button class="btn btn-primary" id="copyBtn" type="button">
@@ -145,45 +141,38 @@
         </button>
         <button class="btn btn-ghost" id="copyHtmlBtn" type="button">Копировать HTML-код</button>
       </div>
-      <p class="hint">После копирования откройте настройки почты → <b>«Подпись»</b> и нажмите <b>Ctrl+V</b>. Логотип и оформление уже внутри — ничего качать не нужно.</p>
+      <p class="hint">После копирования откройте настройки почты → <b>«Подпись»</b> и нажмите <b>Ctrl+V</b>. Логотип платформы и оформление уже внутри — ничего качать не нужно.</p>
     </section>
 
     <section class="card preview-card" aria-label="Предпросмотр">
       <div class="card-title">Предпросмотр</div>
       <div class="preview-stage" id="previewStage"></div>
-      <p class="hint">Так подпись увидит получатель. Лишние поля можно оставить пустыми — они пропадут из подписи сами.</p>
+      <p class="hint">Так подпись увидит получатель: сверху — стандартный блок сотрудника, снизу — блок платформы. Поле «Менторская строка» можно изменить или убрать.</p>
     </section>
   </div>
 </main>
 
 <footer>
-  Подпись сделана в виде таблицы с инлайн-стилями — это единственный формат, который корректно рендерится и в Windows-Outlook, и в Evolution, и в веб-почте. Логотип встроен внутрь, поэтому подпись автономна.
+  Сверху — стандартный блок сотрудника (имя, должность, телефон), снизу — блок платформы «Точка Роста» с логотипом. Подпись сделана в виде таблицы с инлайн-стилями — это единственный формат, который корректно рендерится и в Windows-Outlook, и в Evolution, и в веб-почте. Логотип встроен внутрь, поэтому подпись автономна.
 </footer>
 
 <div class="toast" id="toast" role="status"></div>
 
 <script>
-  var SVG_LOGO = "<svg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#4f46e5'/><stop offset='1' stop-color='#7c3aed'/></linearGradient></defs><rect width='96' height='96' rx='22' fill='url(#g)'/><circle cx='36' cy='38' r='8' fill='#ffffff' opacity='0.95'/><circle cx='60' cy='38' r='8' fill='#ffffff' opacity='0.55'/><rect x='28' y='58' width='40' height='8' rx='4' fill='#ffffff' opacity='0.35'/></svg>";
+  var SVG_LOGO = "<svg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'><defs><linearGradient id='g' x1='0' y1='1' x2='1' y2='0'><stop offset='0' stop-color='#f97316'/><stop offset='1' stop-color='#ea580c'/></linearGradient></defs><rect width='96' height='96' rx='24' fill='url(#g)'/><path d='M48 30v22' stroke='#fff' stroke-width='7' stroke-linecap='round'/><circle cx='42' cy='60' r='6' fill='#fff' opacity='0.9'/><circle cx='54' cy='58' r='6' fill='#fff' opacity='0.55'/></svg>";
   var LOGO_DATA = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(SVG_LOGO);
-  var LOGO_WIDTH = 84;
-  var ACCENT = "#4f46e5";
+  var LOGO_WIDTH = 22;
+  var ACCENT = "#ea580c";
   var SANS = "Arial,Helvetica,sans-serif";
 
   var $ = function(id){ return document.getElementById(id); };
-  var formEls = { name:$("name"), position:$("position"), phone:$("phone"), email:$("email"), site:$("site") };
+  var formEls = { name:$("name"), position:$("position"), phone:$("phone"), mentor:$("mentor") };
 
   function escText(s){
     return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
       return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c];
     });
   }
-  function escHref(s){
-    var t = String(s == null ? "" : s).trim();
-    return t.replace(/[&<>"]/g, function(c){
-      return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c];
-    });
-  }
-
   function clean(s, fallback){
     var t = String(s == null ? "" : s).trim();
     return t || fallback;
@@ -192,46 +181,42 @@
   function phoneHref(p){
     return "tel:" + p.replace(/[^+\d]/g, "");
   }
-  function siteHref(s){
-    var t = String(s).trim();
-    if (!/^https?:\/\//i.test(t)) t = "https://" + t;
-    return t;
-  }
 
   function buildSignature(){
     var name = clean(formEls.name.value);
     var position = clean(formEls.position.value);
     var phone = clean(formEls.phone.value);
-    var email = clean(formEls.email.value);
-    var site = clean(formEls.site.value);
+    var mentor = clean(formEls.mentor.value);
 
-    var links = [];
-    if (phone) links.push("<a href=\"" + phoneHref(phone) + "\" style=\"color:#4b5563;text-decoration:none;\">" + escText(phone) + "</a>");
-    if (email) links.push("<a href=\"mailto:" + escHref(email) + "\" style=\"color:#4b5563;text-decoration:none;\">" + escText(email) + "</a>");
-    if (site) links.push("<a href=\"" + escHref(siteHref(site)) + "\" style=\"color:" + ACCENT + ";text-decoration:none;\">" + escText(site.replace(/^https?:\/\//i, "")) + "</a>");
-    var linksHtml = links.join("<span style=\"color:#c7cad1;\">&nbsp;&middot;&nbsp;</span>");
+    var staffHtml = "";
+    if (name) staffHtml += "<div style=\"font-size:16px;line-height:1.3;font-weight:bold;color:#111827;margin:0;\">" + escText(name) + "</div>";
+    if (position) staffHtml += "<div style=\"font-size:12px;line-height:1.4;color:#4b5563;margin:2px 0 0;\">" + escText(position) + "</div>";
+    if (phone) staffHtml += "<div style=\"font-size:12px;line-height:1.4;color:#4b5563;margin:4px 0 0;\"><a href=\"" + phoneHref(phone) + "\" style=\"color:#4b5563;text-decoration:none;\">" + escText(phone) + "</a></div>";
 
-    var nameHtml = name ? "<div style=\"font-size:17px;line-height:1.3;font-weight:bold;color:#111827;margin:0 0 3px;\">" + escText(name) + "</div>" : "";
-    var posHtml = position ? "<div style=\"font-size:11px;line-height:1.3;font-weight:bold;letter-spacing:.14em;text-transform:uppercase;color:" + ACCENT + ";margin:0 0 10px;\">" + escText(position) + "</div>" : "";
-    var linksHtml2 = linksHtml ? "<div style=\"font-size:12px;line-height:1.7;font-family:" + SANS + ";\">" + linksHtml + "</div>" : "";
+    var mentorHtml = "";
+    if (mentor){
+      mentorHtml = "<tr><td style=\"padding-top:13px;\">"
+        + "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse:collapse;\">"
+        + "<tr>"
+        + "<td valign=\"middle\" style=\"vertical-align:middle;padding-right:9px;\">"
+        +   "<img src=\"" + LOGO_DATA + "\" width=\"" + LOGO_WIDTH + "\" height=\"" + LOGO_WIDTH + "\" alt=\"\" style=\"display:block;width:" + LOGO_WIDTH + "px;height:" + LOGO_WIDTH + "px;border:0;\">"
+        + "</td>"
+        + "<td valign=\"middle\" style=\"vertical-align:middle;font-size:11px;line-height:1.45;color:#6b7280;font-family:" + SANS + ";\">" + escText(mentor) + "</td>"
+        + "</tr>"
+        + "</table>"
+        + "</td></tr>";
+    }
 
-    return "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse:collapse;font-family:" + SANS + ";line-height:1.5;\">"
-      + "<tr>"
-      + "<td valign=\"middle\" style=\"vertical-align:middle;padding-right:18px;\">"
-      +   "<img src=\"" + LOGO_DATA + "\" width=\"" + LOGO_WIDTH + "\" height=\"" + LOGO_WIDTH + "\" alt=\"\" style=\"display:block;width:" + LOGO_WIDTH + "px;height:" + LOGO_WIDTH + "px;border:0;opacity:0.98;\">"
-      + "</td>"
-      + "<td valign=\"top\" style=\"vertical-align:top;border-left:1px solid #e5e7eb;padding-left:18px;\">"
-      +   nameHtml
-      +   posHtml
-      +   linksHtml2
-      + "</td>"
-      + "</tr>"
+    return "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse:collapse;font-family:" + SANS + ";\">"
+      + "<tr><td style=\"padding:0;\">" + staffHtml + "</td></tr>"
+      + "<tr><td style=\"height:13px;\"></td></tr>"
+      + "<tr><td style=\"border-top:1px solid #e5e7eb;\"><span style=\"display:block;height:13px;\"></span></td></tr>"
+      + mentorHtml
       + "</table>";
   }
 
   function buildPlainText(){
-    var parts = [clean(formEls.name.value), clean(formEls.position.value),
-                 clean(formEls.phone.value), clean(formEls.email.value), clean(formEls.site.value)];
+    var parts = [clean(formEls.name.value), clean(formEls.position.value), clean(formEls.phone.value), clean(formEls.mentor.value)];
     return parts.filter(Boolean).join("\n");
   }
 
@@ -239,8 +224,9 @@
     var stage = $("previewStage");
     var name = clean(formEls.name.value);
     var position = clean(formEls.position.value);
-    var filled = formEls.phone.value || formEls.email.value || formEls.site.value;
-    if (!name && !position && !filled){
+    var phone = clean(formEls.phone.value);
+    var mentor = clean(formEls.mentor.value);
+    if (!name && !position && !phone && !mentor){
       stage.innerHTML = "<div class=\"preview-empty\">Заполните поля слева —<br>здесь появится подпись.</div>";
       return;
     }
