@@ -141,8 +141,7 @@
       <div class="field">
         <label>Дизайн подписи</label>
         <div class="chips">
-          <label class="chip"><input type="radio" name="design" value="button" checked><span>С кнопкой</span></label>
-          <label class="chip"><input type="radio" name="design" value="plain"><span>Без кнопки</span></label>
+          <label class="chip"><input type="radio" name="design" value="single" checked><span>В одну колонку</span></label>
           <label class="chip"><input type="radio" name="design" value="columns"><span>Две колонки</span></label>
         </div>
       </div>
@@ -175,9 +174,14 @@
         </div>
       </div>
       <div class="field">
+        <div class="chips">
+          <label class="chip"><input type="checkbox" id="withButton"><span>Добавить кнопку «Записаться ко мне на консультацию»</span></label>
+        </div>
+      </div>
+      <div class="field" id="linkField" hidden>
         <label for="link">Ссылка на вашу карточку в «Точке Роста»</label>
         <input id="link" type="url" placeholder="https://www.portal.rt.ru/…" autocomplete="off">
-        <p class="hint" style="margin-top:6px">Если ссылка указана, в подписи появится кнопка «Записаться ко мне на консультацию». Логотип «Точки Роста» всегда ведёт на страницу платформы.</p>
+        <p class="hint" style="margin-top:6px">Кнопка поведёт на эту ссылку. Логотип «Точки Роста» всегда ведёт на страницу платформы.</p>
       </div>
       <div class="actions">
         <button class="btn btn-primary" id="copyBtn" type="button">
@@ -269,7 +273,7 @@
 
   function currentDesign(){
     var cur = designEls.filter(function(el){ return el.checked; })[0];
-    return cur ? cur.value : "button";
+    return cur ? cur.value : "single";
   }
 
   function mentorText(){
@@ -346,7 +350,7 @@
     var rtLogo = img(RT_LOGO, 100, "Ростелеком");
     function trLogo(w){ return "<a href=\"" + PLATFORM_URL + "\">" + img(LOGO_DATA, w, "Точка Роста") + "</a>"; }
     var button = "";
-    if (link && design !== "plain"){
+    if (link && $("withButton").checked){
       buttonImg = buttonImg || makeButton();
       button = "<a href=\"" + escText(link) + "\">"
         + "<img src=\"" + buttonImg.src + "\" width=\"" + buttonImg.width + "\" height=\"" + buttonImg.height + "\" alt=\"" + BUTTON_TEXT + "\" style=\"display:block;border:0;\"></a>";
@@ -389,7 +393,7 @@
     var parts = ["--", clean(formEls.greeting.value), clean(formEls.name.value), "Ростелеком",
                  clean(formEls.position.value), clean(formEls.department.value), clean(formEls.phone.value),
                  roles ? "Точка Роста: " + roles : "",
-                 roles && link && currentDesign() !== "plain" ? "Записаться ко мне на консультацию: " + link : ""];
+                 roles && link && $("withButton").checked ? "Записаться ко мне на консультацию: " + link : ""];
     return parts.filter(Boolean).join("\n");
   }
 
@@ -507,12 +511,15 @@
   designEls.forEach(function(el){
     el.addEventListener("change", function(){ renderPreview(); persist(); });
   });
+  function syncLinkField(){ $("linkField").hidden = !$("withButton").checked; }
+  $("withButton").addEventListener("change", function(){ syncLinkField(); renderPreview(); persist(); });
 
   function persist(){
     try {
       names.forEach(function(k){ localStorage.setItem("sig:" + k, formEls[k].value); });
       localStorage.setItem("sig:roles", JSON.stringify(roleEls.map(function(el){ return el.checked; })));
       localStorage.setItem("sig:design", currentDesign());
+      localStorage.setItem("sig:withButton", $("withButton").checked ? "1" : "");
       localStorage.removeItem("sig:mentor");
     } catch(e){}
   }
@@ -527,6 +534,7 @@
         var arr = JSON.parse(roles);
         roleEls.forEach(function(el, i){ if (arr[i] != null) el.checked = !!arr[i]; });
       }
+      $("withButton").checked = !!localStorage.getItem("sig:withButton");
       var design = localStorage.getItem("sig:design");
       if (design != null){
         if (designEls.some(function(el){ return el.value === design; }))
@@ -536,6 +544,7 @@
   }
 
   restore();
+  syncLinkField();
   renderPreview();
 </script>
 </body>
