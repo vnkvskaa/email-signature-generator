@@ -127,7 +127,7 @@
   <header>
     <div class="brand"><span class="brand-dot"></span>Ростелеком · Точка роста</div>
     <h1>Подпись Ростелекома — <em>с «Точкой роста»</em>.</h1>
-    <p class="sub">Вы ментор, коуч или карьерный консультант на платформе «Точка роста»? Расскажите об этом в каждом письме. Заполните поля, скопируйте подпись и вставьте её в Outlook, Evolution или Outlook в Citrix — инструкции ниже.</p>
+    <p class="sub">Вы ментор, коуч или карьерный консультант на платформе «Точка роста»? Расскажите об этом в каждом письме. Заполните поля, скопируйте подпись и вставьте её в Outlook или Evolution — инструкции ниже.</p>
     <div class="steps">
       <span class="step"><b>1</b> Заполните поля</span>
       <span class="step"><b>2</b> Нажмите «Скопировать»</span>
@@ -206,11 +206,10 @@
     <div class="tabs" role="tablist">
       <button class="tab" role="tab" data-tab="outlook" aria-selected="true">Outlook</button>
       <button class="tab" role="tab" data-tab="evolution" aria-selected="false">Evolution</button>
-      <button class="tab" role="tab" data-tab="citrix" aria-selected="false">Citrix</button>
     </div>
 
     <div class="tab-panel" data-panel="outlook">
-      <h3>Outlook для Windows (классический)</h3>
+      <h3>Outlook</h3>
       <ol>
         <li>Нажмите <b>«Скопировать подпись»</b> на этой странице.</li>
         <li>В Outlook откройте <b>Файл → Параметры → Почта → Подписи…</b></li>
@@ -241,16 +240,6 @@
       <p class="note"><b>Письма уходят без оформления?</b> Evolution может писать простым текстом. В окне нового письма выберите формат <b>HTML</b> — или включите его по умолчанию в параметрах редактора.</p>
     </div>
 
-    <div class="tab-panel" data-panel="citrix" hidden>
-      <h3>Outlook внутри Citrix</h3>
-      <p>Буфер обмена между вашим компьютером и Citrix часто передаёт только простой текст — тогда логотип и оформление потеряются. Надёжнее всего делать всё <b>внутри сессии Citrix</b>:</p>
-      <ol>
-        <li>Войдите в рабочий стол Citrix и откройте эту страницу в браузере <b>внутри Citrix</b>.</li>
-        <li>Заполните поля и нажмите <b>«Скопировать подпись»</b>.</li>
-        <li>Там же, в Citrix, откройте Outlook и настройте подпись по шагам со вкладки <b>Outlook</b>.</li>
-      </ol>
-      <p class="note"><b>Подпись пропадает после перезахода в Citrix?</b> Значит, профиль не сохраняет настройки Outlook. Обратитесь в ИТ-поддержку: попросите включить сохранение подписей в профиле пользователя.</p>
-    </div>
   </section>
 </main>
 
@@ -302,7 +291,7 @@
     return /^https?:\/\//i.test(u) ? u : "https://" + u;
   }
 
-  // Кнопка — картинкой: Outlook для Windows не скругляет углы у HTML-кнопок.
+  // Кнопка — картинкой: Outlook не скругляет углы у HTML-кнопок.
   var BUTTON_TEXT = "Записаться ко мне на консультацию →";
   var buttonImg = null;
   function makeButton(){
