@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Генератор почтовых подписей</title>
+<title>Подпись Точки Роста</title>
 <style>
   :root{
     --bg:#f6f5f2;
@@ -99,6 +99,19 @@
   }
   .toast.show{opacity:1;transform:translate(-50%,0)}
 
+  .setup{padding:26px;margin-top:24px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+  .tab{appearance:none;font:inherit;font-size:14px;font-weight:600;cursor:pointer;color:var(--ink);
+    background:var(--bg);border:1px solid rgba(25,27,33,.16);border-radius:999px;padding:9px 18px}
+  .tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+  .tab-panel h3{font-size:16px;margin:0 0 10px}
+  .tab-panel h3:not(:first-child){margin-top:22px}
+  .tab-panel p{font-size:14px;line-height:1.6;margin-bottom:10px;max-width:70ch}
+  .tab-panel ol{padding-left:22px;font-size:14px;line-height:1.65;max-width:70ch}
+  .tab-panel li{margin-bottom:4px}
+  .note{background:var(--bg);border-left:3px solid var(--accent);border-radius:8px;padding:12px 14px;margin-top:16px}
+  a{color:var(--accent)}
+
   footer{max-width:1080px;width:100%;margin:0 auto;padding:0 24px 40px;font-size:12px;color:var(--muted);line-height:1.6}
   footer b{color:var(--ink)}
 
@@ -112,9 +125,9 @@
 <body>
 <main class="page">
   <header>
-    <div class="brand"><span class="brand-dot"></span>Подписи для команды</div>
-    <h1>Один раз настроила — <em>и у всех</em> красивая подпись.</h1>
-    <p class="sub">Заполните поля, нажмите «Скопировать» и вставьте готовую подпись в настройки вашего почтового клиента — Outlook, Gmail, Evolution или Apple Mail.</p>
+    <div class="brand"><span class="brand-dot"></span>Ростелеком · Точка Роста</div>
+    <h1>Подпись Ростелекома — <em>с «Точкой Роста»</em>.</h1>
+    <p class="sub">Вы ментор, коуч или карьерный консультант на платформе «Точка Роста»? Расскажите об этом в каждом письме. Заполните поля, скопируйте подпись и вставьте её в Outlook, Evolution или Outlook в Citrix — инструкции ниже.</p>
     <div class="steps">
       <span class="step"><b>1</b> Заполните поля</span>
       <span class="step"><b>2</b> Нажмите «Скопировать»</span>
@@ -135,12 +148,20 @@
         </div>
       </div>
       <div class="field">
+        <label for="greeting">Приветствие</label>
+        <input id="greeting" type="text" value="С уважением," autocomplete="off">
+      </div>
+      <div class="field">
         <label for="name">Имя и фамилия</label>
         <input id="name" type="text" placeholder="Имя Фамилия" autocomplete="off">
       </div>
       <div class="field">
         <label for="position">Должность</label>
         <input id="position" type="text" placeholder="Ведущий специалист" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="company">Компания</label>
+        <input id="company" type="text" value="ПАО «Ростелеком»" autocomplete="off">
       </div>
       <div class="field">
         <label for="phone">Телефон</label>
@@ -160,8 +181,9 @@
           Скопировать подпись
         </button>
         <button class="btn btn-ghost" id="copyHtmlBtn" type="button">Копировать HTML-код</button>
+        <button class="btn btn-ghost" id="downloadBtn" type="button">Скачать .html</button>
       </div>
-      <p class="hint">После копирования откройте настройки почты → <b>«Подпись»</b> и нажмите <b>Ctrl+V</b>. Логотип платформы и оформление уже внутри — ничего качать не нужно.</p>
+      <p class="hint">После копирования откройте настройки подписи в почте и нажмите <b>Ctrl+V</b>. Пошаговые инструкции для вашего клиента — <a href="#setup">ниже</a>.</p>
     </section>
 
     <section class="card preview-card" aria-label="Предпросмотр">
@@ -170,10 +192,62 @@
       <p class="hint">Так подпись увидит получатель. Переключайте <b>Дизайн подписи</b> вверху формы — предпросмотр обновится сразу. Снимите все галочки ролей — блок платформы исчезнет, останется подпись сотрудника.</p>
     </section>
   </div>
+
+  <section class="card setup" id="setup" aria-label="Инструкции">
+    <div class="card-title">Как установить подпись</div>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" data-tab="outlook" aria-selected="true">Outlook</button>
+      <button class="tab" role="tab" data-tab="evolution" aria-selected="false">Evolution</button>
+      <button class="tab" role="tab" data-tab="citrix" aria-selected="false">Citrix</button>
+    </div>
+
+    <div class="tab-panel" data-panel="outlook">
+      <h3>Outlook для Windows (классический)</h3>
+      <ol>
+        <li>Нажмите <b>«Скопировать подпись»</b> на этой странице.</li>
+        <li>В Outlook откройте <b>Файл → Параметры → Почта → Подписи…</b></li>
+        <li>Нажмите <b>«Создать»</b> и введите название, например «Точка Роста».</li>
+        <li>Кликните в поле «Изменить подпись» и нажмите <b>Ctrl+V</b>.</li>
+        <li>Справа в «Выбор подписи по умолчанию» выберите её для <b>новых сообщений</b> и для <b>ответов и пересылки</b>.</li>
+        <li>Нажмите <b>ОК</b>. Проверьте результат: создайте новое письмо.</li>
+      </ol>
+      <h3>Новый Outlook и Outlook в браузере</h3>
+      <ol>
+        <li>Нажмите <b>⚙ Параметры → Учётные записи → Подписи</b>.</li>
+        <li>Нажмите <b>«Новая подпись»</b>, задайте название и вставьте подпись (<b>Ctrl+V</b>).</li>
+        <li>Ниже выберите её для новых сообщений и ответов, нажмите <b>«Сохранить»</b>.</li>
+      </ol>
+      <p class="note"><b>Логотип не появился?</b> Поставьте курсор над строкой с ролями, нажмите в редакторе подписи кнопку «Рисунок» и выберите файл <a href="#" class="logo-dl">логотипа (скачать)</a>.</p>
+    </div>
+
+    <div class="tab-panel" data-panel="evolution" hidden>
+      <h3>Evolution</h3>
+      <ol>
+        <li>Нажмите <b>«Скопировать подпись»</b> на этой странице.</li>
+        <li>В Evolution откройте <b>Правка → Параметры → Параметры редактора</b>, вкладка <b>«Подписи»</b>.</li>
+        <li>Нажмите <b>«Добавить»</b>. В окне редактора подписи включите формат <b>HTML</b> (меню «Формат» или переключатель в панели).</li>
+        <li>Введите название подписи, кликните в поле и нажмите <b>Ctrl+V</b>. Нажмите <b>«Сохранить и закрыть»</b>.</li>
+        <li>Откройте <b>Правка → Параметры → Учётные записи почты</b>, выберите вашу учётную запись → <b>«Изменить»</b>.</li>
+        <li>На вкладке <b>«Составление сообщений»</b> в поле <b>«Подпись»</b> выберите созданную подпись и нажмите <b>ОК</b>.</li>
+      </ol>
+      <p class="note"><b>Письма уходят без оформления?</b> Evolution может писать простым текстом. В окне нового письма выберите формат <b>HTML</b> — или включите его по умолчанию в параметрах редактора.</p>
+    </div>
+
+    <div class="tab-panel" data-panel="citrix" hidden>
+      <h3>Outlook внутри Citrix</h3>
+      <p>Буфер обмена между вашим компьютером и Citrix часто передаёт только простой текст — тогда логотип и оформление потеряются. Надёжнее всего делать всё <b>внутри сессии Citrix</b>:</p>
+      <ol>
+        <li>Войдите в рабочий стол Citrix и откройте эту страницу в браузере <b>внутри Citrix</b>.</li>
+        <li>Заполните поля и нажмите <b>«Скопировать подпись»</b>.</li>
+        <li>Там же, в Citrix, откройте Outlook и настройте подпись по шагам со вкладки <b>Outlook</b>.</li>
+      </ol>
+      <p class="note"><b>Подпись пропадает после перезахода в Citrix?</b> Значит, профиль не сохраняет настройки Outlook. Обратитесь в ИТ-поддержку: попросите включить сохранение подписей в профиле пользователя.</p>
+    </div>
+  </section>
 </main>
 
 <footer>
-  Четыре дизайна: «Классика», «Плашка», «Колонка», «Минимум». Во всех — блок сотрудника (имя, должность, телефон) и блок платформы «Точка Роста» с логотипом. Подпись сделана в виде таблицы с инлайн-стилями — это единственный формат, который корректно рендерится и в Windows-Outlook, и в Evolution, и в веб-почте. Логотип встроен внутрь, поэтому подпись автономна.
+  Подпись сделана таблицей с инлайн-стилями — так она одинаково выглядит в Outlook, Evolution и веб-почте. Логотип «Точки Роста» встроен внутрь подписи. Данные, которые вы вводите, никуда не отправляются и хранятся только в вашем браузере.
 </footer>
 
 <div class="toast" id="toast" role="status"></div>
@@ -185,7 +259,7 @@
   var SANS = "Arial,Helvetica,sans-serif";
 
   var $ = function(id){ return document.getElementById(id); };
-  var formEls = { name:$("name"), position:$("position"), phone:$("phone") };
+  var formEls = { greeting:$("greeting"), name:$("name"), position:$("position"), company:$("company"), phone:$("phone") };
   var roleEls = Array.prototype.slice.call(document.querySelectorAll('input[name="role"]'));
   var designEls = Array.prototype.slice.call(document.querySelectorAll('input[name="design"]'));
 
@@ -218,6 +292,8 @@
     var name = clean(formEls.name.value);
     var position = clean(formEls.position.value);
     var phone = clean(formEls.phone.value);
+    var greeting = clean(formEls.greeting.value);
+    var company = clean(formEls.company.value);
     var mentor = mentorText();
     var design = currentDesign();
 
@@ -226,8 +302,13 @@
     function fmtName(color){
       return name ? "<div style=\"font-size:16px;line-height:1.3;font-weight:bold;color:" + color + ";margin:0;\">" + escText(name) + "</div>" : "";
     }
-    function fmtPos(){
-      return position ? "<div style=\"font-size:12px;line-height:1.4;color:" + GRAY + ";margin:2px 0 0;\">" + escText(position) + "</div>" : "";
+    function fmtPos(align){
+      var st = "font-size:12px;line-height:1.4;color:" + GRAY + ";margin:2px 0 0;" + (align ? "text-align:" + align + ";" : "");
+      return (position ? "<div style=\"" + st + "\">" + escText(position) + "</div>" : "")
+           + (company ? "<div style=\"" + st + "\">" + escText(company) + "</div>" : "");
+    }
+    function fmtGreeting(align){
+      return greeting ? "<div style=\"font-family:" + SANS + ";font-size:13px;line-height:1.4;color:" + INK + ";margin:0 0 10px;" + (align ? "text-align:" + align + ";" : "") + "\">" + escText(greeting) + "</div>" : "";
     }
     function fmtPhone(){
       return phone ? "<div style=\"font-size:12px;line-height:1.4;color:" + GRAY + ";margin:4px 0 0;\"><a href=\"" + phoneHref(phone) + "\" style=\"color:" + GRAY + ";text-decoration:none;\">" + escText(phone) + "</a></div>" : "";
@@ -246,7 +327,7 @@
     }
 
     if (design === "panel"){
-      return "<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse:collapse;border:1px solid " + HAIR + ";font-family:" + SANS + ";\">"
+      return fmtGreeting() + "<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse:collapse;border:1px solid " + HAIR + ";font-family:" + SANS + ";\">"
         + "<tr><td style=\"background:#faf9f7;padding:16px 18px;\">"
         +   fmtName(ACC) + fmtPos() + fmtPhone()
         +   (mentor ? rule(13, 11) + logoTag() : "")
@@ -255,7 +336,7 @@
     }
 
     if (design === "side"){
-      return "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse:collapse;font-family:" + SANS + ";\">"
+      return fmtGreeting() + "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse:collapse;font-family:" + SANS + ";\">"
         + "<tr>"
         + "<td valign=\"top\" style=\"vertical-align:top;padding-right:22px;\">"
         +   "<img src=\"" + LOGO_DATA + "\" width=\"150\" alt=\"\" style=\"display:block;width:150px;height:auto;border:0;\">"
@@ -269,10 +350,10 @@
     }
 
     if (design === "minimal"){
-      return "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" align=\"center\" style=\"border-collapse:collapse;font-family:" + SANS + ";margin:0 auto;\">"
+      return fmtGreeting("center") + "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" align=\"center\" style=\"border-collapse:collapse;font-family:" + SANS + ";margin:0 auto;\">"
         + "<tr><td align=\"center\" style=\"text-align:center;padding:0 8px;\">"
         +   (name ? "<div style=\"font-size:15px;line-height:1.3;font-weight:bold;color:" + INK + ";margin:0;text-align:center;\">" + escText(name) + "</div>" : "")
-        +   (position ? "<div style=\"font-size:12px;line-height:1.4;color:" + GRAY + ";margin:3px 0 0;text-align:center;\">" + escText(position) + "</div>" : "")
+        +   fmtPos("center")
         +   (phone ? "<div style=\"font-size:12px;line-height:1.4;color:" + GRAY + ";margin:4px 0 0;text-align:center;\"><a href=\"" + phoneHref(phone) + "\" style=\"color:" + GRAY + ";text-decoration:none;\">" + escText(phone) + "</a></div>" : "")
         +   rule(12, 12, ACC, "40px")
         +   (mentor ? "<img src=\"" + LOGO_DATA + "\" width=\"" + LOGO_WIDTH + "\" alt=\"\" style=\"display:block;margin:0 auto;width:" + LOGO_WIDTH + "px;height:auto;border:0;\">"
@@ -281,7 +362,7 @@
         + "</table>";
     }
 
-    return "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse:collapse;font-family:" + SANS + ";\">"
+    return fmtGreeting() + "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse:collapse;font-family:" + SANS + ";\">"
       + "<tr><td style=\"padding:0;\">" + fmtName(INK) + fmtPos() + fmtPhone() + "</td></tr>"
       + (mentor
           ? "<tr><td style=\"height:13px;\"></td></tr>"
@@ -292,8 +373,10 @@
   }
 
   function buildPlainText(){
-    var parts = [clean(formEls.name.value), clean(formEls.position.value), clean(formEls.phone.value),
-                 mentorText().replace(/\s*&middot;\s*/g, " · ")];
+    var roles = mentorText().replace(/\s*&middot;\s*/g, " · ");
+    var parts = [clean(formEls.greeting.value), clean(formEls.name.value), clean(formEls.position.value),
+                 clean(formEls.company.value), clean(formEls.phone.value),
+                 roles ? "Точка Роста: " + roles : ""];
     return parts.filter(Boolean).join("\n");
   }
 
@@ -371,6 +454,34 @@
     } else {
       showToast("Не получилось автоматически");
     }
+  });
+
+  function download(href, filename){
+    var a = document.createElement("a");
+    a.href = href;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+  $("downloadBtn").addEventListener("click", function(){
+    var doc = "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"></head><body>" + buildSignature() + "</body></html>";
+    var url = URL.createObjectURL(new Blob([doc], { type:"text/html" }));
+    download(url, "podpis-tochka-rosta.html");
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+  });
+  document.querySelectorAll(".logo-dl").forEach(function(a){
+    a.addEventListener("click", function(e){ e.preventDefault(); download(LOGO_DATA, "tochka-rosta-logo.png"); });
+  });
+
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+  tabs.forEach(function(tab){
+    tab.addEventListener("click", function(){
+      tabs.forEach(function(t){ t.setAttribute("aria-selected", String(t === tab)); });
+      document.querySelectorAll(".tab-panel").forEach(function(p){
+        p.hidden = p.getAttribute("data-panel") !== tab.getAttribute("data-tab");
+      });
+    });
   });
 
   var names = Object.keys(formEls);
