@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Подпись Точки Роста</title>
+<title>Подпись Точки роста</title>
 <style>
   :root{
-    --bg:#f6f5f2;
+    --bg:#eef5fc;
     --card:#ffffff;
     --ink:#191b21;
     --muted:#6e7277;
@@ -125,9 +125,9 @@
 <body>
 <main class="page">
   <header>
-    <div class="brand"><span class="brand-dot"></span>Ростелеком · Точка Роста</div>
-    <h1>Подпись Ростелекома — <em>с «Точкой Роста»</em>.</h1>
-    <p class="sub">Вы ментор, коуч или карьерный консультант на платформе «Точка Роста»? Расскажите об этом в каждом письме. Заполните поля, скопируйте подпись и вставьте её в Outlook, Evolution или Outlook в Citrix — инструкции ниже.</p>
+    <div class="brand"><span class="brand-dot"></span>Ростелеком · Точка роста</div>
+    <h1>Подпись Ростелекома — <em>с «Точкой роста»</em>.</h1>
+    <p class="sub">Вы ментор, коуч или карьерный консультант на платформе «Точка роста»? Расскажите об этом в каждом письме. Заполните поля, скопируйте подпись и вставьте её в Outlook, Evolution или Outlook в Citrix — инструкции ниже.</p>
     <div class="steps">
       <span class="step"><b>1</b> Заполните поля</span>
       <span class="step"><b>2</b> Нажмите «Скопировать»</span>
@@ -166,7 +166,7 @@
         <input id="phone" type="tel" placeholder="+7 900 000-00-00" autocomplete="off">
       </div>
       <div class="field">
-        <label>Роли на платформе «Точка Роста»</label>
+        <label>Роли на платформе «Точка роста»</label>
         <div class="chips">
           <label class="chip"><input type="checkbox" name="role" data-label="Ментор" checked><span>Ментор</span></label>
           <label class="chip"><input type="checkbox" name="role" data-label="Коуч" checked><span>Коуч</span></label>
@@ -179,9 +179,9 @@
         </div>
       </div>
       <div class="field" id="linkField" hidden>
-        <label for="link">Ссылка на вашу карточку в «Точке Роста»</label>
+        <label for="link">Ссылка на вашу карточку в «Точке роста»</label>
         <input id="link" type="url" placeholder="https://www.portal.rt.ru/…" autocomplete="off">
-        <p class="hint" style="margin-top:6px">Кнопка поведёт на эту ссылку. Логотип «Точки Роста» всегда ведёт на страницу платформы.</p>
+        <p class="hint" style="margin-top:6px">Кнопка поведёт на эту ссылку. Логотип «Точки роста» всегда ведёт на страницу платформы.</p>
       </div>
       <div class="actions">
         <button class="btn btn-primary" id="copyBtn" type="button">
@@ -197,7 +197,7 @@
     <section class="card preview-card" aria-label="Предпросмотр">
       <div class="card-title">Предпросмотр</div>
       <div class="preview-stage" id="previewStage"></div>
-      <p class="hint">Так подпись увидит получатель. Снимите все галочки ролей — блок «Точки Роста» исчезнет, останется обычная подпись Ростелекома.</p>
+      <p class="hint">Так подпись увидит получатель. Снимите все галочки ролей — блок «Точки роста» исчезнет, останется обычная подпись Ростелекома.</p>
     </section>
   </div>
 
@@ -214,7 +214,7 @@
       <ol>
         <li>Нажмите <b>«Скопировать подпись»</b> на этой странице.</li>
         <li>В Outlook откройте <b>Файл → Параметры → Почта → Подписи…</b></li>
-        <li>Нажмите <b>«Создать»</b> и введите название, например «Точка Роста».</li>
+        <li>Нажмите <b>«Создать»</b> и введите название, например «Точка роста».</li>
         <li>Кликните в поле «Изменить подпись» и нажмите <b>Ctrl+V</b>.</li>
         <li>Справа в «Выбор подписи по умолчанию» выберите её для <b>новых сообщений</b> и для <b>ответов и пересылки</b>.</li>
         <li>Нажмите <b>ОК</b>. Проверьте результат: создайте новое письмо.</li>
@@ -255,7 +255,7 @@
 </main>
 
 <footer>
-  Подпись сделана таблицей с инлайн-стилями — так она одинаково выглядит в Outlook, Evolution и веб-почте. Логотип «Точки Роста» встроен внутрь подписи. Данные, которые вы вводите, никуда не отправляются и хранятся только в вашем браузере.
+  Подпись сделана таблицей с инлайн-стилями — так она одинаково выглядит в Outlook, Evolution и веб-почте. Логотип «Точки роста» встроен внутрь подписи. Данные, которые вы вводите, никуда не отправляются и хранятся только в вашем браузере.
 </footer>
 
 <div class="toast" id="toast" role="status"></div>
@@ -348,7 +348,7 @@
       + (department ? text(escText(department), 13, INK) : "")
       + (phone ? text("<a href=\"" + phoneHref(phone) + "\" style=\"color:" + INK + ";text-decoration:none;\">" + escText(phone) + "</a>", 13, INK) : "");
     var rtLogo = img(RT_LOGO, 100, "Ростелеком");
-    function trLogo(w){ return "<a href=\"" + PLATFORM_URL + "\">" + img(LOGO_DATA, w, "Точка Роста") + "</a>"; }
+    function trLogo(w){ return "<a href=\"" + PLATFORM_URL + "\">" + img(LOGO_DATA, w, "Точка роста") + "</a>"; }
     var button = "";
     if (link && $("withButton").checked){
       buttonImg = buttonImg || makeButton();
@@ -392,7 +392,7 @@
     var link = safeUrl(formEls.link.value);
     var parts = ["--", clean(formEls.greeting.value), clean(formEls.name.value), "Ростелеком",
                  clean(formEls.position.value), clean(formEls.department.value), clean(formEls.phone.value),
-                 roles ? "Точка Роста: " + roles : "",
+                 roles ? "Точка роста: " + roles : "",
                  roles && link && $("withButton").checked ? "Записаться ко мне на консультацию: " + link : ""];
     return parts.filter(Boolean).join("\n");
   }
