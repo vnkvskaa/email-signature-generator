@@ -319,7 +319,13 @@
     return { src: c.toDataURL("image/png"), width: w, height: h };
   }
 
+  // Белая подложка: иначе при копировании браузер переносит в подпись голубой фон страницы.
   function buildSignature(){
+    return "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" bgcolor=\"#ffffff\" style=\"border-collapse:collapse;background:#ffffff;\"><tr><td bgcolor=\"#ffffff\" style=\"background:#ffffff;padding:0;\">"
+      + buildSignatureBody() + "</td></tr></table>";
+  }
+
+  function buildSignatureBody(){
     var greeting = clean(formEls.greeting.value);
     var name = clean(formEls.name.value);
     var position = clean(formEls.position.value);
@@ -426,6 +432,7 @@
     wrap.style.position = "fixed";
     wrap.style.left = "-9999px";
     wrap.style.top = "0";
+    wrap.style.background = "#ffffff";
     wrap.innerHTML = html;
     document.body.appendChild(wrap);
     var range = document.createRange();
